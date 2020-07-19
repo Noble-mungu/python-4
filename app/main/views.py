@@ -27,6 +27,7 @@ def new_pitch():
         return redirect(url_for('main.index'))
         
     return render_template('create_pitch.html', form = form)
+
 @main.route('/comment/<int:pitch_id>', methods = ['POST','GET'])
 @login_required
 def comment(pitch_id):
@@ -41,6 +42,8 @@ def comment(pitch_id):
         new_comment.save_c()
         return redirect(url_for('.comment', pitch_id = pitch_id))
     return render_template('comment.html', form =form, pitch = pitch,all_comments=all_comments)
+
+
 @main.route('/user/<name>')
 def profile(name):
     user = User.query.filter_by(username = name).first()
@@ -50,6 +53,7 @@ def profile(name):
         abort(404)
 
     return render_template("profile/profile.html", user = user,posts=posts)
+
 @main.route('/user/<name>/updateprofile', methods = ['POST','GET'])
 @login_required
 def updateprofile(name):
@@ -62,6 +66,8 @@ def updateprofile(name):
         user.save_u()
         return redirect(url_for('.profile',name = name))
     return render_template('profile/update.html',form =form)
+
+
 @main.route('/user/<name>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(name):
@@ -72,6 +78,7 @@ def update_pic(name):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',name=name))
+
 @main.route('/like/<int:id>',methods = ['POST','GET'])
 @login_required
 def like(id):
@@ -87,6 +94,7 @@ def like(id):
     new_vote = Upvote(user = current_user, pitch_id=id)
     new_vote.save()
     return redirect(url_for('main.index',id=id))
+
 @main.route('/dislike/<int:id>',methods = ['POST','GET'])
 @login_required
 def dislike(id):
@@ -102,4 +110,3 @@ def dislike(id):
     new_downvote = Downvote(user = current_user, pitch_id=id)
     new_downvote.save()
     return redirect(url_for('main.index',id = id))
-    
