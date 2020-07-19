@@ -72,4 +72,19 @@ def update_pic(name):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',name=name))
+@main.route('/like/<int:id>',methods = ['POST','GET'])
+@login_required
+def like(id):
+    get_pitches = Upvote.get_upvotes(id)
+    valid_string = f'{current_user.id}:{id}'
+    for pitch in get_pitches:
+        to_str = f'{pitch}'
+        print(valid_string+" "+to_str)
+        if valid_string == to_str:
+            return redirect(url_for('main.index',id=id))
+        else:
+            continue
+    new_vote = Upvote(user = current_user, pitch_id=id)
+    new_vote.save()
+    return redirect(url_for('main.index',id=id))
     
