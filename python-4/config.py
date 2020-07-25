@@ -2,10 +2,17 @@ class Config:
 	'''
 	parent configuration
 	'''
-class ProdConfig(config):
+class ProdConfig(Config):
 	pass
 
-class DevConfig(config):
+class DevConfig(Config):
+	'''
+	DEvelopment configuaration
+	'''
+
+
+
+
 
 config_options = {
 'develpoment':DevConfig,
