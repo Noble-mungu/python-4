@@ -6,7 +6,7 @@ from flask_script import Manager,Server
 app = create_app('production')
 
 manager = Manager(app)
-manager.add_command('server',Server)
+manager.add_command('server',Server(host='localhost',port=1234))
 
 @manager.add_command
 def test():

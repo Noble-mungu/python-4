@@ -1,6 +1,6 @@
 from flask import render_template
 from .import main
-# from ..models import User
+from ..models import User
 
 @main.route('/')
 def index():
