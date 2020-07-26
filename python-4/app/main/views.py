@@ -1,10 +1,18 @@
-from flask import render_template
-from .import main
-from ..models import User
+from flask import render_template,redirect,url_for,abort,request,flash
+from app.main import main
+from app.models import User,Blog,Comment
+from .forms import UpdateProfile,CreateBlog
+from .. import db
+from app.requests import get_quotes
+from flask_login import login_required,current_user
+# from ..email import mail_message
+import secrets
+import os
+# from PIL import Image
 
 @main.route('/')
 def index():
-	quotes = get_quotes('page',1,type = int)
+	quotes = get_quotes()
 	page = request.args.get('page',1,type = int)
 	blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page = page ,per_page = 3)
 	return render_template('index.html',quote = quote,blogs=blogs)
@@ -52,7 +60,7 @@ def updateprofile(name):
         user.save()
         return redirect(url_for('.profile',name = name))
     return render_template('profile/updateprofile.html',form =form)
-    
+
 @main.route('/new_post', methods=['POST','GET'])
 @login_required
 def new_blog():
