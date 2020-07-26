@@ -5,29 +5,28 @@ from .forms import UpdateProfile,CreateBlog
 from .. import db
 from app.requests import get_quotes
 from flask_login import login_required,current_user
-# from ..email import mail_message
+from ..email import mail_message
 import secrets
 import os
 # from PIL import Image
 
 @main.route('/')
 def index():
-	quotes = get_quotes()
-	page = request.args.get('page',1,type = int)
-	blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page = page ,per_page = 3)
-	return render_template('index.html',quote = quote,blogs=blogs)
+    quotes = get_quotes()
+    page = request.args.get('page',1, type = int )
+    blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page = page, per_page = 3)
+    return render_template('index.html', quote = quotes,blogs=blogs)
 def save_picture(form_picture):
-	random_hex = secrets.token_hex(8)
-	_,f_ext = os.path.splitext(form_picture.filename)
-	picture_filename = random_hex + f_ext
-	picture_path = os.path.join('app/static/photos')
-
-	output_size = (180,180)
-	i = Image.open(form_picture)
-	i.thumbnail(output_size)
-	i.save(picture_path)
-	return picture_filename
-
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + f_ext
+    picture_path = os.path.join('app/static/photos', picture_filename)
+    
+    output_size = (200, 200)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    return picture_filename
 
 @main.route('/profile',methods = ['POST','GET'])
 @login_required
@@ -48,6 +47,8 @@ def profile():
         form.email.data = current_user.email
         form.bio.data = current_user.bio
     profile_pic_path = url_for('static',filename = 'photos/'+ current_user.profile_pic_path) 
+    return render_template('profile/profile.html', profile_pic_path=profile_pic_path, form = form)
+
 @main.route('/user/<name>/updateprofile', methods = ['POST','GET'])
 @login_required
 def updateprofile(name):
@@ -60,6 +61,7 @@ def updateprofile(name):
         user.save()
         return redirect(url_for('.profile',name = name))
     return render_template('profile/updateprofile.html',form =form)
+
 
 @main.route('/new_post', methods=['POST','GET'])
 @login_required
@@ -112,6 +114,8 @@ def comment(blog_id):
     new_comment = Comment(comment = comment, user_id = current_user._get_current_object().id, blog_id=blog_id)
     new_comment.save()
     return redirect(url_for('main.blog',id = blog.id))
+
+
 @main.route('/blog/<blog_id>/delete', methods = ['POST'])
 @login_required
 def delete_post(blog_id):
@@ -129,6 +133,4 @@ def user_posts(username):
     page = request.args.get('page',1, type = int )
     blogs = Blog.query.filter_by(user=user).order_by(Blog.posted.desc()).paginate(page = page, per_page = 4)
     return render_template('userposts.html',blogs=blogs,user = user)
-
-
 
