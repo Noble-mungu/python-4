@@ -1,0 +1,20 @@
+<div class="container">
+    <h1 class="text"><b> LIFE QUOTES</b></h1>
+    <hr>
+    <p>Share your quote</p>
+    <h2>Inspire before you expire</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div *ngFor='let quote of quotes;let i = index'>
+                <li appHighlight *ngIf= 'quote.upvote > 0'></li>
+                <button class="btn btn-danger" (click)='toggleDetails(i)'>View Quote</button>
+                <app-quote-detail *ngIf='quote.showDescription' [quote]='quote' (isComplete) = 'deleteQuote($event,i)'>Delete</app-quote-detail>
+            </div>
+        </div>
+    </div>        
+</div>
+<div class="col-md-6">
+    <app-form (addQuote)="addNewQuote($event)"></app-form>
+</div>
+
+
