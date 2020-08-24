@@ -1,3 +1,15 @@
 <p>{{quote.quote}}</p>
 <p>{{quote.author}}</p> 
 <p>{{quote.poster}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>Upvotes:{{quote.upvotes}}</p>
+            <button type="button" class="btn btn-outline-success" (click)="upvote()">Upvote</button>
+        </div>
+        <div class="col">
+            <p>Downvotes:{{quote.downvotes}}</p>
+            <button type="button" class="btn btn-outline-danger" (click)="downvote()">Downvote</button>
+        </div>
+    </div>
+</div>
