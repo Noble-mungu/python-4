@@ -7,10 +7,10 @@ import { Quote } from '../quote';
 })
 export class QuoteComponent implements OnInit {
 	quotes = [
-	new Quote("Inauma itabidi uzoee","Simple Boy","SWahili"),
-	new Quote("Ooliskia wapi","Ule Msee","Says"),
-	new Quote("Hardwork pays","English","Proverb"),
-	new Quote("Yaliyopita si ndewle","Swahili","Proverb"),
+	new Quote("Inauma itabidi uzoee","Simple Boy","SWahili",0,0,new Date(2013,5,5)),
+	new Quote("Ooliskia wapi","Ule Msee","Says",0,0,new Date(2010,4,3)),
+	new Quote("Hardwork pays","English","Proverb",0,0, new Date(2015,6,6)),
+	new Quote("Yaliyopita si ndewle","Swahili","Proverb",new Date(2017,3,2)),
 
 	]
 
@@ -33,10 +33,10 @@ export class QuoteComponent implements OnInit {
   submitType = 'save';
 
    quote = [
-   new Quote("Inauma itabidi uzoee","Simple Boy","SWahili"),
-	new Quote("Ooliskia wapi","Ule Msee","Says"),
-	new Quote("Hardwork pays","English","Proverb"),
-	new Quote("Yaliyopita si ndewle","Swahili","Proverb"),
+   new Quote("Inauma itabidi uzoee","Simple Boy","SWahili",0,0,new Date(2013,5,5)),
+	new Quote("Ooliskia wapi","Ule Msee","Says",0,0,new Date(2010,4,3)),
+	new Quote("Hardwork pays","English","Proverb",0,0, new Date(2015,6,6)),
+	new Quote("Yaliyopita si ndewle","Swahili","Proverb",new Date(2017,3,2)),
 
   ];
 
